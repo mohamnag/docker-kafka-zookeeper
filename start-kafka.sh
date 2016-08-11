@@ -5,6 +5,8 @@ if [[ -n "$KAFKA_HEAP_OPTS" ]]; then
     unset KAFKA_HEAP_OPTS
 fi
 
+export KAFKA_ZOOKEEPER_CONNECT="${KAFKA_ADVERTISED_HOST_NAME}:${KAFKA_ZOOKEEPER_PORT}"
+
 for VAR in `env`
 do
   if [[ $VAR =~ ^KAFKA_ && ! $VAR =~ ^KAFKA_HOME ]]; then
