@@ -44,7 +44,7 @@ ADD create-topics.sh /usr/bin/create-topics.sh
 EXPOSE 2181 2888 3888
 EXPOSE 9092
 
-VOLUME [ "/kafka", "/opt/zookeeper-${ZOOKEEPER_VERSION}/conf", "/opt/zookeeper-${ZOOKEEPER_VERSION}/data" ]
+VOLUME [ "/kafka", "${ZK_HOME}/conf", "${ZK_HOME}/data" ]
 
 # Use "exec" form so that it runs as PID 1 (useful for graceful shutdown)
 CMD ["start-kafka.sh"]
