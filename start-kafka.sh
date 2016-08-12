@@ -6,6 +6,7 @@ if [[ -n "$KAFKA_HEAP_OPTS" ]]; then
 fi
 
 export KAFKA_ZOOKEEPER_CONNECT="${KAFKA_ADVERTISED_HOST_NAME}:${KAFKA_ZOOKEEPER_PORT}"
+echo "127.0.0.1 ${KAFKA_ADVERTISED_HOST_NAME}" >> /etc/hosts
 
 for VAR in `env`
 do
