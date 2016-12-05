@@ -7,8 +7,10 @@ if [[ -n "$KAFKA_HEAP_OPTS" ]]; then
     unset KAFKA_HEAP_OPTS
 fi
 
-export KAFKA_ZOOKEEPER_CONNECT="${KAFKA_ADVERTISED_HOST_NAME}:${KAFKA_ZOOKEEPER_PORT}"
-echo "127.0.0.1 ${KAFKA_ADVERTISED_HOST_NAME}" >> /etc/hosts
+# when not running as root, it is impossible to modify /etc/hosts
+# therefore we add a local address to zookeeper connect string
+export KAFKA_ZOOKEEPER_CONNECT="localhost:2181,${KAFKA_ADVERTISED_HOST_NAME}:${KAFKA_ZOOKEEPER_PORT}"
+#echo "127.0.0.1 ${KAFKA_ADVERTISED_HOST_NAME}" >> /etc/hosts
 
 for VAR in `env`
 do
