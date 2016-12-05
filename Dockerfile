@@ -45,8 +45,10 @@ EXPOSE 2181 2888 3888
 EXPOSE 9092
 
 RUN adduser --disabled-password --gecos '' kafka && \
-	chown -R kafka:kafka ${KAFKA_HOME} && \
-	chown -R kafka:kafka ${ZK_HOME}
+	chmod o+rw -R ${KAFKA_HOME}/logs && \
+	chmod o+rw -R ${KAFKA_HOME}/config && \
+	chmod o+rw -R ${ZK_HOME}/conf && \
+	chmod o+rw -R ${ZK_HOME}/data
 USER kafka
 
 VOLUME [ "${KAFKA_LOG_DIRS}", "${ZK_HOME}/data" ]
