@@ -49,7 +49,7 @@ RUN adduser --disabled-password --gecos '' kafka && \
 	chown -R kafka:kafka ${ZK_HOME}
 USER kafka
 
-VOLUME [ "${KAFKA_HOME}/logs", "${KAFKA_HOME}/config", "${ZK_HOME}/conf", "${ZK_HOME}/data" ]
+VOLUME [ "${KAFKA_LOG_DIRS}", "${ZK_HOME}/data" ]
 
 # Use "exec" form so that it runs as PID 1 (useful for graceful shutdown)
 CMD ["start-kafka.sh"]
