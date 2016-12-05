@@ -3,7 +3,7 @@ MAINTAINER Mohammad Naghavi <mohamnag@gmail.com>
 
 # fixed, informational ENV vars:
 # for Kafka
-ENV KAFKA_VERSION "0.10.0.1"
+ENV KAFKA_VERSION "0.10.1.0"
 ENV SCALA_VERSION "2.11"
 ENV KAFKA_HOME /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION}
 ENV KAFKA_BROKER_ID "-1"
@@ -11,7 +11,7 @@ ENV START_TIMEOUT "600"
 ENV KAFKA_PORT "9092"
 ENV KAFKA_ZOOKEEPER_PORT "2181"
 # for ZK
-ENV ZOOKEEPER_VERSION "3.4.8"
+ENV ZOOKEEPER_VERSION "3.4.9"
 ENV ZK_HOME /opt/zookeeper-${ZOOKEEPER_VERSION}
 
 
@@ -23,7 +23,7 @@ ENV KAFKA_LOG_DIRS "/kafka/kafka-logs-$HOSTNAME"
 
 
 # Install Kafka
-ADD http://mirror.klaus-uwe.me/apache/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz /tmp/kafka.tgz
+ADD http://www-eu.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz /tmp/kafka.tgz
 RUN tar xfz /tmp/kafka.tgz -C /opt/ && \
     rm /tmp/kafka.tgz
 
