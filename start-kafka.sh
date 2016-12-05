@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+cd ${KAFKA_HOME}
+
 if [[ -n "$KAFKA_HEAP_OPTS" ]]; then
     sed -r -i "s/(export KAFKA_HEAP_OPTS)=\"(.*)\"/\1=\"$KAFKA_HEAP_OPTS\"/g" $KAFKA_HOME/bin/kafka-server-start.sh
     unset KAFKA_HEAP_OPTS
