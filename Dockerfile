@@ -1,18 +1,18 @@
-FROM java:8-jdk
-MAINTAINER Mohammad Naghavi <mohamnag@gmail.com>
+FROM openjdk:16-slim
+MAINTAINER Martin Dos Santos <plateadodev@gmail.com>
 
 # fixed, informational ENV vars:
 # for Kafka
-ENV KAFKA_VERSION "0.10.1.0"
-ENV SCALA_VERSION "2.11"
+ENV KAFKA_VERSION "2.6.0"
+ENV SCALA_VERSION "2.13"
 ENV KAFKA_HOME /opt/kafka_${SCALA_VERSION}-${KAFKA_VERSION}
 ENV KAFKA_BROKER_ID "-1"
 ENV START_TIMEOUT "600"
 ENV KAFKA_PORT "9092"
 ENV KAFKA_ZOOKEEPER_PORT "2181"
 # for ZK
-ENV ZOOKEEPER_VERSION "3.4.9"
-ENV ZK_HOME /opt/zookeeper-${ZOOKEEPER_VERSION}
+ENV ZOOKEEPER_VERSION "zookeeper-3.6.2"
+ENV ZK_HOME /opt/apache-${ZOOKEEPER_VERSION}
 
 
 # Kafka runtime config, may be overridden:
@@ -28,11 +28,12 @@ RUN tar xfz /tmp/kafka.tgz -C /opt/ && \
     rm /tmp/kafka.tgz
 
 # Install ZK
-ADD http://mirror.vorboss.net/apache/zookeeper/zookeeper-${ZOOKEEPER_VERSION}/zookeeper-${ZOOKEEPER_VERSION}.tar.gz /tmp/zookeeper.tar.gz
-RUN tar -xzf /tmp/zookeeper.tar.gz -C /opt/ && \
-    rm /tmp/zookeeper.tar.gz && \
-    mv /opt/zookeeper-${ZOOKEEPER_VERSION}/conf/zoo_sample.cfg /opt/zookeeper-${ZOOKEEPER_VERSION}/conf/zoo.cfg && \
-    sed  -i "s|/tmp/zookeeper|$ZK_HOME/data|g" $ZK_HOME/conf/zoo.cfg; mkdir $ZK_HOME/data
+ADD http://mirror.vorboss.net/apache/zookeeper/${ZOOKEEPER_VERSION}/apache-${ZOOKEEPER_VERSION}.tar.gz /tmp/zookeeper.tar.gz
+RUN tar -xzf /tmp/zookeeper.tar.gz -C /opt/
+RUN rm /tmp/zookeeper.tar.gz
+RUN mv /opt/apache-${ZOOKEEPER_VERSION}/conf/zoo_sample.cfg /opt/apache-${ZOOKEEPER_VERSION}/conf/zoo.cfg
+RUN ls /opt/
+RUN sed  -i "s|/tmp/zookeeper|$ZK_HOME/data|g" $ZK_HOME/conf/zoo.cfg; mkdir $ZK_HOME/data
 
 # net-tools needed for create-topics.sh
 RUN apt-get update && apt-get install -y net-tools
