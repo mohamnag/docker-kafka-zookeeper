@@ -12,7 +12,7 @@ ENV KAFKA_PORT "9092"
 ENV KAFKA_ZOOKEEPER_PORT "2181"
 # for ZK
 ENV ZOOKEEPER_VERSION "zookeeper-3.6.2"
-ENV ZK_HOME /opt/apache-${ZOOKEEPER_VERSION}
+ENV ZK_HOME /opt/apache-${ZOOKEEPER_VERSION}-bin
 
 
 # Kafka runtime config, may be overridden:
@@ -23,15 +23,16 @@ ENV KAFKA_LOG_DIRS "/kafka/kafka-logs-$HOSTNAME"
 
 
 # Install Kafka
-ADD http://www-eu.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz /tmp/kafka.tgz
-RUN tar xfz /tmp/kafka.tgz -C /opt/ && \
+ ADD http://www-eu.apache.org/dist/kafka/${KAFKA_VERSION}/kafka_${SCALA_VERSION}-${KAFKA_VERSION}.tgz /tmp/kafka.tgz
+ RUN tar xfz /tmp/kafka.tgz -C /opt/ && \
     rm /tmp/kafka.tgz
 
 # Install ZK
-ADD http://mirror.vorboss.net/apache/zookeeper/${ZOOKEEPER_VERSION}/apache-${ZOOKEEPER_VERSION}.tar.gz /tmp/zookeeper.tar.gz
+ADD http://mirror.vorboss.net/apache/zookeeper/${ZOOKEEPER_VERSION}/apache-${ZOOKEEPER_VERSION}-bin.tar.gz /tmp/zookeeper.tar.gz
 RUN tar -xzf /tmp/zookeeper.tar.gz -C /opt/
 RUN rm /tmp/zookeeper.tar.gz
-RUN mv /opt/apache-${ZOOKEEPER_VERSION}/conf/zoo_sample.cfg /opt/apache-${ZOOKEEPER_VERSION}/conf/zoo.cfg
+RUN ls /opt/
+RUN mv /opt/apache-${ZOOKEEPER_VERSION}-bin/conf/zoo_sample.cfg /opt/apache-${ZOOKEEPER_VERSION}-bin/conf/zoo.cfg
 RUN ls /opt/
 RUN sed  -i "s|/tmp/zookeeper|$ZK_HOME/data|g" $ZK_HOME/conf/zoo.cfg; mkdir $ZK_HOME/data
 
